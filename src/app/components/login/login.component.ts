@@ -25,7 +25,8 @@ export class LoginComponent implements OnInit {
         this._router.navigate(['/dashboard']); // Navigasi ke halaman dashboard setelah login berhasil
       },
       (error) => {
-        alert('Invalid username or password');
+        console.log(error);
+        alert(error.message);
       }
     );
   }

@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,9 @@ export class AuthService {
   ) { }
 
   login(credential: any): Observable<any> {
-    return this._http.post(`${this._apiURL}/login`, credential)
+    return this._http.post(`${this._apiURL}/login`, credential).pipe(
+      catchError(this.handleError)
+    );
   }
 
   saveToken(token: string): void {
@@ -26,5 +28,15 @@ export class AuthService {
 
   isLoggedIn(): boolean {
     return !!localStorage.getItem('authToken');
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = 'Unknown error!';
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      errorMessage = `${error.error.message}`;
+    }
+    return throwError(() => new Error(errorMessage));
   }
 }
