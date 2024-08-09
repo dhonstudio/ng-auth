@@ -30,6 +30,16 @@ export class AuthService {
     return !!localStorage.getItem('authToken');
   }
 
+  getUser(): any {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      const decodedToken = JSON.parse(atob(token.split('.')[1]));
+      return decodedToken;
+    }
+
+    return null
+  }
+
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'Unknown error!';
     if (error.error instanceof ErrorEvent) {
