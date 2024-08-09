@@ -1,3 +1,4 @@
+import { GoogleLoginProvider, SocialAuthService } from '@abacritt/angularx-social-login';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
@@ -12,6 +13,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private _auth: AuthService,
+    private _oauth: SocialAuthService,
     private _router: Router
   ) { }
 
@@ -19,6 +21,13 @@ export class LoginComponent implements OnInit {
     if (this._auth.isLoggedIn()) {
       this._router.navigate(['/dashboard']);
     }
+  }
+
+  signInWithGoogle(): void {
+    this._oauth.signIn(GoogleLoginProvider.PROVIDER_ID).then((user: any) => {
+      console.log(user);
+      // Lakukan sesuatu dengan data user, misalnya kirim token ke backend
+    });
   }
 
   onSubmit() {
