@@ -16,10 +16,6 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this._auth.login(this.credentials).subscribe(response => {
-      localStorage.setItem('token', response.token);
-      this._router.navigate(['/dashboard']);
-    });
   }
 
   onSubmit() {
