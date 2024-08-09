@@ -16,11 +16,15 @@ export class AuthService {
     return this._http.post(`${this._apiURL}/login`, credential)
   }
 
+  saveToken(token: string): void {
+    localStorage.setItem('authToken', token);
+  }
+
   logout() {
-    localStorage.removeItem('token');
+    localStorage.removeItem('authToken');
   }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('token');
+    return !!localStorage.getItem('authToken');
   }
 }

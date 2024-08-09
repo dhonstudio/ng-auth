@@ -22,4 +22,16 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  onSubmit() {
+    this._auth.login(this.credentials).subscribe(
+      (token) => {
+        this._auth.saveToken(token);
+        this._router.navigate(['/dashboard']); // Navigasi ke halaman dashboard setelah login berhasil
+      },
+      (error) => {
+        alert('Invalid username or password');
+      }
+    );
+  }
+
 }
